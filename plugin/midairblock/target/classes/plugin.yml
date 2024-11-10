@@ -7,7 +7,7 @@ api-version: 1.21.1
 commands:
   midairblock:
     permission: "midairblock.use"
-    description: Gives player the want to summon a mid air block
+    description: Gives player the wand to summon a mid air block
     aliases:
       - mab
     usage: "/<command>"

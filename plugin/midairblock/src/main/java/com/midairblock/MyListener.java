@@ -13,21 +13,31 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-public class MyListener implements Listener{
+public class MyListener implements Listener {
 
-    @EventHandler public void onWandSwing(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        ItemStack w = new ItemStack(Material.STICK);
-        ItemMeta m = w.getItemMeta();
-        m.displayName(Component.text("MAB Wand").color(NamedTextColor.AQUA));
-        w.setItemMeta(m);
+    private final ItemStack wand;
 
-        if (e.getAction() ==Action.LEFT_CLICK_AIR && p.getPlayer().getInventory().getItemInMainHand().equals(w)) {
-            Block b = p.getTargetBlock(null, 3);
-            if (b.getType()==Material.AIR) {
-                b.setType(Material.STONE);
-            }
-        } 
+    public MyListener() {
+        // Initialize the wand once to avoid creating a new instance every time.
+        wand = new ItemStack(Material.STICK);
+        ItemMeta meta = wand.getItemMeta();
+        meta.displayName(Component.text("MAB Wand").color(NamedTextColor.AQUA));
+        wand.setItemMeta(meta);
     }
 
+    @EventHandler
+    public void onWandSwing(PlayerInteractEvent e) {
+        Player player = e.getPlayer();
+        ItemStack mainHandItem = player.getInventory().getItemInMainHand();
+
+        // Check if the player is holding the wand
+        if (e.getAction() == Action.LEFT_CLICK_AIR && mainHandItem.getType() == Material.STICK ) {
+
+            // Get the targeted block within 3 blocks
+            Block targetBlock = player.getTargetBlockExact(3);
+            if (targetBlock != null && targetBlock.getType() == Material.AIR) {
+                targetBlock.setType(Material.STONE);
+            }
+        }
+    }
 }
