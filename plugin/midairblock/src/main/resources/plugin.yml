@@ -1,0 +1,18 @@
+name: MidAirBlock
+version: 0.2
+main: com.midairblock.Main
+author: Benjamin Bravo
+api-version: 1.21.1
+
+commands:
+  midairblock:
+    permission: "midairblock.use"
+    description: Gives player the want to summon a mid air block
+    aliases:
+      - mab
+    usage: "/<command>"
+
+permissions:
+  midairblock.use:
+    description: use the midairblock command and wand
+    default: op
